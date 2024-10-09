@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:toko_kita/bloc/logout_bloc.dart';
+import 'package:toko_kita/bloc/produk_bloc.dart';
 import 'package:toko_kita/model/produk.dart';
+import 'package:toko_kita/ui/login_page.dart';
 import 'package:toko_kita/ui/produk_detail.dart';
 import 'package:toko_kita/ui/produk_form.dart';
 
@@ -37,41 +40,45 @@ class _ProdukPageState extends State<ProdukPage> {
               title: const Text('Logout'),
               trailing: const Icon(Icons.logout),
               onTap: () async {
-                
+                await LogoutBloc.logout().then((value) => {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      (route) => false)
+                    });
               },
             ),
           ],
         ),
       ),
-      body: ListView(
-        children: [
-          ItemProduk(
-            produk: Produk(
-              id: 1,
-              kodeProduk: 'A001',
-              namaProduk: 'Kamera',
-              harga: 10000,
-            ),
-          ),
-          ItemProduk(
-            produk: Produk(
-              id: 2,
-              kodeProduk: 'P002',
-              namaProduk: 'Kulkas',
-              harga: 20000,
-            ),
-          ),
-          ItemProduk(
-            produk: Produk(
-              id: 3,
-              kodeProduk: 'P003',
-              namaProduk: 'Mesin Cuci',
-              harga: 30000,
-            ),
-          ),
-        ],
-      )
+      body: 
+        FutureBuilder<List<Produk>>(
+          future: ProdukBloc.getProduk(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            return snapshot.hasData?
+              ListProduk(
+                list : snapshot.data,
+              ) : const Center(
+                child: CircularProgressIndicator(),
+              );
+          },
+        ),
       );
+  }
+}
+
+class ListProduk extends StatelessWidget {
+  final List? list;
+
+  const ListProduk({super.key, required this.list});
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: list == null ? 0 : list!.length,
+      itemBuilder: (context, index) {
+        return ItemProduk(produk: list![index]);
+      },
+    );
   }
 }
 

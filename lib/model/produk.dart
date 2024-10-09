@@ -1,19 +1,17 @@
 class Produk {
-  int? id;
+  String? id;
   String? kodeProduk;
   String? namaProduk;
-  int? harga;
-
+  var harga;
+  
   Produk({this.id, this.kodeProduk, this.namaProduk, this.harga});
 
   factory Produk.fromJson(Map<String, dynamic> json) {
     return Produk(
       id: json['id'],
-      kodeProduk: json['kodeProduk'],
-      namaProduk: json['namaProduk'],
+      kodeProduk: json['kode_produk'],
+      namaProduk: json['nama_produk'],
       harga: json['harga'],
     );
   }
-
-  get hargaProduk => null;
 }
