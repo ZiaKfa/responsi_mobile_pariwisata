@@ -1,18 +1,20 @@
 class ApiUrl{
-  static const String baseUrl = "http://localhost:8080";
+  static const String baseUrl = "http://responsi.webwizards.my.id/api";
   static const String login = "$baseUrl/login";
   static const String registrasi = "$baseUrl/registrasi";
-  static const String produk = "$baseUrl/produk";
 
-  static String showProduk(String id){
-    return "$baseUrl/produk/${id.toString()}";
+
+  static const String jadwal = "$baseUrl/pariwisata/jadwal_keberangkatan";
+
+  static String showJadwal(int id){
+    return "$jadwal/${id.toString()}";
   }
 
-  static String updateProduk(String id){
-    return "$baseUrl/produk/${id.toString()}";
+  static String updateJadwal(int id){
+    return "$jadwal/${id.toString()}/update";
   }
 
-  static String deleteProduk(int id){
-    return "$baseUrl/produk/${id.toString()}";
+  static String deleteJadwal(int id){
+    return "$jadwal/${id.toString()}/delete";
   }
 }

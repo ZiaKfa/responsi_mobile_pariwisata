@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:toko_kita/bloc/registrasi_bloc.dart';
-import 'package:toko_kita/widget/success_dialog.dart';
-import 'package:toko_kita/widget/warning_dialog.dart';
+import 'package:jadwal_keberangkatan/bloc/registrasi_bloc.dart';
+import 'package:jadwal_keberangkatan/widget/success_dialog.dart';
+import 'package:jadwal_keberangkatan/widget/warning_dialog.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -22,22 +22,31 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text(
+          'Register',
+          style: TextStyle(fontFamily: 'Helvetica'),
+        ),
+        backgroundColor: Colors.yellow,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _namaTextField(),
-                _emailTextField(),
-                _passwordTextField(),
-                _konfirmasiPasswordTextField(),
-                _registerButton(),
-              ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.yellow[100],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _namaTextField(),
+                  _emailTextField(),
+                  _passwordTextField(),
+                  _konfirmasiPasswordTextField(),
+                  _registerButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -46,88 +55,103 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _namaTextField() {
-    return TextFormField(
-      controller: _namaController,
-      decoration: const InputDecoration(
-        labelText: 'Nama',
-        hintText: 'Masukkan Nama Anda',
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: _namaController,
+        decoration: const InputDecoration(
+          labelText: 'Nama',
+          hintText: 'Masukkan Nama Anda',
+        ),
+        keyboardType: TextInputType.text,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Nama tidak boleh kosong';
+          } else if (value.length < 3) {
+            return 'Nama minimal 3 karakter';
+          }
+          return null;
+        },
       ),
-      keyboardType: TextInputType.text,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Nama tidak boleh kosong';
-        } else if (value.length < 3) {
-          return 'Nama minimal 3 karakter';
-        }
-        return null;
-      },
     );
   }
 
   Widget _emailTextField() {
-    return TextFormField(
-      controller: _emailController,
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        hintText: 'Masukkan Email Anda',
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: _emailController,
+        decoration: const InputDecoration(
+          labelText: 'Email',
+          hintText: 'Masukkan Email Anda',
+        ),
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Email tidak boleh kosong';
+          }
+          Pattern pattern =
+              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+          RegExp regex = RegExp(pattern.toString());
+          if (!regex.hasMatch(value)) {
+            return 'Email tidak valid';
+          }
+          return null;
+        },
       ),
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Email tidak boleh kosong';
-        }
-        Pattern pattern =
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-        RegExp regex = RegExp(pattern.toString());
-        if (!regex.hasMatch(value)) {
-          return 'Email tidak valid';
-        }
-        return null;
-      },
     );
   }
 
   Widget _passwordTextField() {
-    return TextFormField(
-      controller: _passwordController,
-      decoration: const InputDecoration(
-        labelText: 'Password',
-        hintText: 'Masukkan Password Anda',
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: _passwordController,
+        decoration: const InputDecoration(
+          labelText: 'Password',
+          hintText: 'Masukkan Password Anda',
+        ),
+        keyboardType: TextInputType.text,
+        obscureText: true,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Password tidak boleh kosong';
+          } else if (value.length < 6) {
+            return 'Password minimal 6 karakter';
+          }
+          return null;
+        },
       ),
-      keyboardType: TextInputType.text,
-      obscureText: true,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Password tidak boleh kosong';
-        } else if (value.length < 6) {
-          return 'Password minimal 6 karakter';
-        }
-        return null;
-      },
     );
   }
 
   Widget _konfirmasiPasswordTextField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Konfirmasi Password',
-        hintText: 'Masukkan Konfirmasi Password Anda',
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        decoration: const InputDecoration(
+          labelText: 'Konfirmasi Password',
+          hintText: 'Masukkan Konfirmasi Password Anda',
+        ),
+        keyboardType: TextInputType.text,
+        obscureText: true,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Konfirmasi Password tidak boleh kosong';
+          } else if (value != _passwordController.text) {
+            return 'Konfirmasi Password tidak sama';
+          }
+          return null;
+        },
       ),
-      keyboardType: TextInputType.text,
-      obscureText: true,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Konfirmasi Password tidak boleh kosong';
-        } else if (value != _passwordController.text) {
-          return 'Konfirmasi Password tidak sama';
-        }
-        return null;
-      },
     );
   }
 
   Widget _registerButton() {
     return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+     backgroundColor: Colors.yellow[50],
+    ),
       child: const Text('Registrasi'),
       onPressed: () {
         var validate = _formKey.currentState!.validate();

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:toko_kita/helper/user_info.dart';
-import 'package:toko_kita/ui/login_page.dart';
-import 'package:toko_kita/ui/produk_page.dart';
+import 'package:jadwal_keberangkatan/helper/user_info.dart';
+import 'package:jadwal_keberangkatan/ui/login_page.dart';
+import 'package:jadwal_keberangkatan/ui/jadwal_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     var token = await UserInfo().getToken();
     if (token != null) {
       setState(() {
-        page = const ProdukPage();
+        page = const JadwalPage();
       });
     } else {
       setState(() {
@@ -42,6 +42,9 @@ class _MyAppState extends State<MyApp> {
       title: 'Toko Kita',
       debugShowCheckedModeBanner: false,
       home: page,
+      theme: ThemeData(
+        fontFamily: 'Helvetica',
+      ),
     );
   }
 }

@@ -11,14 +11,14 @@ class UserInfo {
     return prefs.getString('token');
   }
 
-  Future setUserId(String userId) async {
+  Future setUserId(int userId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString('userId', userId);
+    return prefs.setInt('userId', userId);
   }
 
-  Future<String?> getUserId() async {
+  Future<int?> getUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId');
+    return prefs.getInt('userId');
   }
 
   Future logout() async {

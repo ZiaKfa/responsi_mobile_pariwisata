@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:toko_kita/helper/exception.dart';
-import 'package:toko_kita/helper/user_info.dart';
+import 'package:jadwal_keberangkatan/helper/exception.dart';
+import 'package:jadwal_keberangkatan/helper/user_info.dart';
 import 'package:http/http.dart' as http;
 
 class Api {

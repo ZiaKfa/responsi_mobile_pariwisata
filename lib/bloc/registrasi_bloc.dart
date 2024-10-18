@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:toko_kita/helper/api.dart';
-import 'package:toko_kita/helper/list_api.dart';
-import 'package:toko_kita/model/registrasi.dart';
+import 'package:jadwal_keberangkatan/helper/api.dart';
+import 'package:jadwal_keberangkatan/helper/list_api.dart';
+import 'package:jadwal_keberangkatan/model/registrasi.dart';
 
 class RegistrasiBloc {
   static Future<Registrasi> registrasi (

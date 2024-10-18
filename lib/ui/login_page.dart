@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:toko_kita/bloc/login_bloc.dart';
-import 'package:toko_kita/helper/user_info.dart';
-import 'package:toko_kita/ui/produk_page.dart';
-import 'package:toko_kita/ui/register_page.dart';
-import 'package:toko_kita/widget/success_dialog.dart';
-import 'package:toko_kita/widget/warning_dialog.dart';
+import 'package:jadwal_keberangkatan/bloc/login_bloc.dart';
+import 'package:jadwal_keberangkatan/helper/user_info.dart';
+import 'package:jadwal_keberangkatan/ui/jadwal_page.dart';
+import 'package:jadwal_keberangkatan/ui/register_page.dart';
+import 'package:jadwal_keberangkatan/widget/success_dialog.dart';
+import 'package:jadwal_keberangkatan/widget/warning_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,9 +23,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 	return Scaffold(
 	  appBar: AppBar(
-		title: const Text('Login'),
+    backgroundColor: Colors.yellow,
+		title: const Text(
+      'Login ',
+      style : TextStyle(fontFamily: 'Helvetica'),
+      ),
 	  ),
-	  body: SingleChildScrollView(
+      body: Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.yellow[100], // Set your desired background color here
+      child: SingleChildScrollView(
 		child: Padding(
 		  padding: const EdgeInsets.all(8.0),
 		  child: Form(
@@ -36,18 +44,25 @@ class _LoginPageState extends State<LoginPage> {
 				_passwordTextField(),
 				_buttonLogin(),
 				const SizedBox(height: 30),
-				_menuRegistrasi(),
+        Row(
+          children: [
+            Text("Belum punya akun? "),
+            _menuRegistrasi(),
+          ],
+        )
 			  ],
 			),
 		  ),
 		),
-	  ),
+	  ),)
 	);
   }
 
   // Membuat Textbox email
   Widget _emailTextField() {
-	return TextFormField(
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 10.0),
+    child: TextFormField(
 	  decoration: const InputDecoration(labelText: "Email"),
 	  keyboardType: TextInputType.emailAddress,
 	  controller: _emailTextboxController,
@@ -57,13 +72,15 @@ class _LoginPageState extends State<LoginPage> {
 		  return 'Email harus diisi';
 		}
 		return null;
-	  },
+	  },)
 	);
   }
 
   // Membuat Textbox password
   Widget _passwordTextField() {
-	return TextFormField(
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 10.0),
+    child: TextFormField(
 	  decoration: const InputDecoration(labelText: "Password"),
 	  keyboardType: TextInputType.text,
 	  obscureText: true,
@@ -74,13 +91,16 @@ class _LoginPageState extends State<LoginPage> {
 		  return "Password harus diisi";
 		}
 		return null;
-	  },
+	  },)
 	);
   }
 
   // Membuat Tombol Login
   Widget _buttonLogin() {
-	return ElevatedButton(
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+     backgroundColor: Colors.yellow[50],
+    ),
 	  child: const Text("Login"),
 	  onPressed: () {
 		var validasi = _formKey.currentState!.validate();
@@ -104,7 +124,7 @@ void _submit() {
   ).then((value) async {
     if (value.code == 200) {
       await UserInfo().setToken(value.token.toString());
-      await UserInfo().setUserId((value.userId.toString()));
+      await UserInfo().setUserId(value.userId!);
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -114,7 +134,7 @@ void _submit() {
       ).then((value) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const ProdukPage()),
+          MaterialPageRoute(builder: (context) => const JadwalPage()),
         );
       }
       );
